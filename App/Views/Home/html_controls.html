@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    <h1 class="mb-4">Różne kontrolki HTML</h1>
+	
+	<div>
+		<label class="form-label">NIP<input type="text" name="nip" class="form-control"/></label>
+		<label class="form-label">REGON<input type="number" name="regon" class="form-control" min="1" step="1"/></label>
+	</div>
+	<div>
+		<label class="form-label">NAZWA<input type="text" name="nazwa" class="form-control"/></label>
+		<label class="form-label">DATA POWSTANIA<input type="date" name="data_powstania" class="form-control"/></label>
+	</div>
+	<div>
+		<label class="form-label">ULICA<input type="text" name="ulica" class="form-control"/></label>
+		<label class="form-label">NUMER DOMU<input type="text" name="numer_domu" class="form-control"/></label>
+		<label class="form-label">NUMER MIESZKANIA<input type="text" name="numer_mieszkania" class="form-control"/></label>
+	</div>
+	
+	<div class="mb-4">
+		<label for="uwagi" class="form-label">UWAGI</label>
+		<textarea name="uwagi" id="uwagi" class="form-control" rows="6" maxlength="150"></textarea>
+	</div>
+	
+	<div>
+		<label class="form-label" for="kolor">Kolor</label>
+		<select class="form-select" id="kolor" name="kolor">					
+			<option value="zielony">zielony</option>
+			<option value="niebieski">niebieski</option>
+			<option value="szary">szary</option>
+			<option value="turkusowy">turkusowy</option>
+			<option value="granatowy">granatowy</option>
+			<option value="czerwony">czerwony</option>
+			<option value="bialy">biały</option>
+		</select>
+	</div>
+	
+	<div>
+		<label class="form-label" for="kolor">VAT</label>
+		<select class="form-select" id="vat" name="vat">					
+			<option value="zw">ZW</option>
+			<option value="np">NP</option>
+			<option value="zero">0%</option>
+			<option value="3">3%</option>
+			<option value="8">8%</option>
+			<option value="23">23%</option>
+		</select>
+	</div>
+	
+	<div class="mt-4">
+		<ol class="list-group list-group-numbered list-group-flush">
+			<li class="list-group-item">Element</li>
+			<li class="list-group-item">Element</li>
+			<li class="list-group-item">Element</li>
+		</ol>
+	</div>
+						
+{% endblock %}

@@ -20,4 +20,14 @@ class Home extends \Core\Controller
     {
         View::renderTemplate('Home/index.html');
     }
+	
+	/**
+     * Show the different HTML controls page
+     *
+     * @return void
+     */
+    public function differentHtmlControlsAction()
+    {
+        View::renderTemplate('Home/html_controls.html');
+    }
 }
