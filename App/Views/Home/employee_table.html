@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    <h1 class="mb-4">Tabela Pracowników</h1>
+    
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Lp.</th>
+                <th scope="col">Imię</th>
+                <th scope="col">Nazwisko</th>
+                <th scope="col">Stanowisko</th>
+                <th scope="col">Data zatrudnienia</th>
+                <th scope="col">Ilość dni urlopowych</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Adam</td>
+                <td>Asanov</td>
+                <td>Kompozytor</td>
+                <td>2013</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Bartosz</td>
+                <td>Bednorz</td>
+                <td>Siatkarz</td>
+                <td>2013</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Cezary</td>
+                <td>Ciszewski</td>
+                <td>Reżyser</td>
+                <td>1989</td>
+                <td>24</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Daniel</td>
+                <td>Defoe</td>
+                <td>Pisarz</td>
+                <td>1678</td>
+                <td>13</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Ewa</td>
+                <td>Ewart</td>
+                <td>Dziennikarka</td>
+                <td>1985</td>
+                <td>13</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div>
+        <p>Wybierz kolory tła dla tabeli:</p>
+        <label for="kolor-1">Kolor 1:</label>
+        <input type="color" class="m-1" value="#f2f2f2" id="kolor-1">
+        <label for="kolor-2">Kolor 2:</label>
+        <input type="color" class="m-1" value="#ffffff" id="kolor-2">
+	</div>
+  
+	<script>
+		var first_color;
+		var second_color;
+
+		window.addEventListener("load", startup, false);
+
+		function startup() {
+			first_color = document.querySelector("#kolor-1");
+			second_color = document.querySelector("#kolor-2");
+			first_color.addEventListener("input", updateFirst, false);
+			second_color.addEventListener("input", updateSecond, false);
+		}
+
+		function updateFirst(event) {
+			var odd = document.querySelectorAll("tbody > tr:nth-child(odd)");
+			odd.forEach(function(odd) {
+				odd.style.backgroundColor = event.target.value;
+			});
+		}
+		
+		function updateSecond(event) {
+			var even = document.querySelectorAll("tbody > tr:nth-child(even)");
+			even.forEach(function(even) {
+				even.style.backgroundColor = event.target.value;
+			});
+		}
+	</script>
+  
+{% endblock %}

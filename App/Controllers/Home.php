@@ -30,4 +30,14 @@ class Home extends \Core\Controller
     {
         View::renderTemplate('Home/html_controls.html');
     }
+	
+	/**
+     * Show the employee table page
+     *
+     * @return void
+     */
+    public function employeeTableAction()
+    {
+        View::renderTemplate('Home/employee_table.html');
+    }
 }
