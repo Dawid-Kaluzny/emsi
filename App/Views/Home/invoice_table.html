@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    <h1 class="mb-4">Faktury VAT</h1>
+    
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Lp.</th>
+                <th scope="col">Opis</th>
+                <th scope="col">MPK</th>
+                <th scope="col">Kwota Netto</th>
+                <th scope="col">Ilość</th>
+                <th scope="col">VAT</th>
+                <th scope="col">Kwota Brutto</th>
+                <th scope="col">Wartość Netto</th>
+                <th scope="col">Wartość Brutto</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Płyta muzyczna "Piersi i przyjaciele 2"</td>
+                <td>Rzeszów</td>
+                <td class="net-amount" contenteditable='true'>11.99</td>
+                <td class="amount" contenteditable='true'>2</td>
+                <td class="vat"></td>
+                <td class="gross-amount"></td>
+                <td class="net-value"></td>
+                <td class="gross-value"></td>
+            </tr>
+			<tr>
+                <td>2</td>
+                <td>Piłka do siatkówki</td>
+                <td>Zabrze</td>
+                <td class="net-amount" contenteditable='true'>49.99</td>
+                <td class="amount" contenteditable='true'>3</td>
+				<td class="vat"></td>
+                <td class="gross-amount"></td>
+                <td class="net-value"></td>
+                <td class="gross-value"></td>
+            </tr>
+			<tr>
+                <td>3</td>
+                <td>Bilet na film "Wolność jest darem Boga"</td>
+                <td>Busko-Zdrój</td>
+                <td class="net-amount" contenteditable='true'>24.5</td>
+                <td class="amount" contenteditable='true'>2</td>
+				<td class="vat"></td>
+                <td class="gross-amount"></td>
+                <td class="net-value"></td>
+                <td class="gross-value"></td>
+            </tr>
+			<tr>
+                <td>4</td>
+                <td>Książka "Przypadki Robinsona Kruzoe"</td>
+                <td>Londyn</td>
+                <td class="net-amount" contenteditable='true'>39.99</td>
+                <td class="amount" contenteditable='true'>1</td>
+				<td class="vat"></td>
+                <td class="gross-amount"></td>
+                <td class="net-value"></td>
+                <td class="gross-value"></td>
+            </tr>
+			<tr>
+                <td>5</td>
+                <td>Cykl reportaży "Dokumenty Ewy Ewart"</td>
+                <td>Warszawa</td>
+                <td class="net-amount" contenteditable='true'>5000</td>
+                <td class="amount" contenteditable='true'>1</td>
+				<td class="vat"></td>
+                <td class="gross-amount"></td>
+                <td class="net-value"></td>
+                <td class="gross-value"></td>
+            </tr>
+        </tbody>
+    </table>
+	
+	<button class="btn btn-success" onclick="overThousand()">Powyżej 1000,00 zł Netto</button>
+     
+	<script>
+		window.addEventListener("load", start, false);
+		
+		function start() {
+			initialSelectVat();
+			initialData();
+		}
+		
+		function initialSelectVat() {
+			var vat = document.querySelectorAll(".vat");
+			vat.forEach(function(vat) {
+				vat.innerHTML = '<select class="form-select" id="vat" name="vat"> <option value="0">ZW</option> <option value="0">NP</option> <option value="0">0%</option> <option value="3">3%</option> <option value="8">8%</option> <option value="23" selected>23%</option> </select>';
+			});
+		}
+
+		function initialData() {
+			var tableRows = document.querySelectorAll("tbody > tr");
+			tableRows.forEach(function(tableRow) {
+				updateData(tableRow);
+				tableRow.addEventListener("focusout", function() { updateData(this) }, false);
+				tableRow.addEventListener("change", function() { updateData(this) }, false);
+			});
+		}	
+		
+		function updateData(tableRow) {
+			var net_amount = tableRow.querySelector(".net-amount");
+			net_amount = parseFloat(net_amount.innerHTML);
+			var amount = tableRow.querySelector('.amount');
+			amount = parseFloat(amount.innerHTML);
+			var vat = tableRow.querySelector('.vat > select');
+			vat = parseFloat(vat.value);
+			var gross_amount = tableRow.querySelector('.gross-amount');
+			var net_value = tableRow.querySelector('.net-value');
+			var gross_value = tableRow.querySelector('.gross-value');
+			
+			gross_amount.innerHTML = (net_amount * (100 + vat) / 100).toFixed(2);
+			net_value.innerHTML = (net_amount * amount).toFixed(2);			
+			gross_value.innerHTML = (net_amount * amount * (100 + vat) / 100).toFixed(2);
+		}
+		
+		function overThousand() {
+			var tableRows = document.querySelectorAll("tbody > tr");
+			tableRows.forEach(function(tableRow) {
+				var net_amount = tableRow.querySelector(".net-amount");
+				net_amount = parseFloat(net_amount.innerHTML);
+				if (net_amount > 1000.00) {
+					tableRow.style.backgroundColor = "#bce27f";
+				}
+			});
+		}
+	</script>
+  
+{% endblock %}

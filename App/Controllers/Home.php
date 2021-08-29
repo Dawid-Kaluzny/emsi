@@ -40,4 +40,14 @@ class Home extends \Core\Controller
     {
         View::renderTemplate('Home/employee_table.html');
     }
+	
+	/**
+     * Show the invoice table page
+     *
+     * @return void
+     */
+    public function invoiceTableAction()
+    {
+        View::renderTemplate('Home/invoice_table.html');
+    }
 }
