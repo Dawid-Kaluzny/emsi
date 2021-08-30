@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    <h1 class="mb-4">Tabela Delegacji BD</h1>
+    
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+			<tr>
+                <th scope="col">Lp.</th>
+                <th scope="col">Imię i Nazwisko</th>
+                <th scope="col">Data od:</th>
+                <th scope="col">Data do:</th>
+                <th scope="col">Miejsce wyjazdu:</th>
+                <th scope="col">Miejsce przyjazdu:</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for delegation in delegations %}
+			<tr>
+				<td>{{ delegation.id }}</td>
+                <td>{{ delegation.first_name }} {{ delegation.last_name }}</td>
+                <td>{{ delegation.date_from }}</td>
+                <td>{{ delegation.date_to }}</td>
+                <td>{{ delegation.place_departure }}</td>
+                <td>{{ delegation.place_arrival }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  
+{% endblock %}

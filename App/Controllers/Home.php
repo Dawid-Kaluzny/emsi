@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use \App\Models\Delegation;
 use \Core\View;
 
 /**
@@ -49,5 +50,19 @@ class Home extends \Core\Controller
     public function invoiceTableAction()
     {
         View::renderTemplate('Home/invoice_table.html');
+    }
+	
+	/**
+     * Show the delegation table page
+     *
+     * @return void
+     */
+    public function delegationTableAction()
+    {
+        $delegation = new Delegation();
+        $data = $delegation->getEmployeeDelegation();
+        View::renderTemplate('Home/delegation_table.html', [
+            'delegations' => $data
+        ]);
     }
 }

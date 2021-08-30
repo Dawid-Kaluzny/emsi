@@ -9,34 +9,63 @@ namespace App;
  */
 class Config
 {
-
-    /**
-     * Database host
-     * @var string
-     */
-    const DB_HOST = 'your-database-host';
-
-    /**
-     * Database name
-     * @var string
-     */
-    const DB_NAME = 'your-database-name';
-
-    /**
-     * Database user
-     * @var string
-     */
-    const DB_USER = 'your-database-user';
-
-    /**
-     * Database password
-     * @var string
-     */
-    const DB_PASSWORD = 'your-database-password';
-
-    /**
-     * Show or hide error messages on screen
-     * @var boolean
-     */
-    const SHOW_ERRORS = true;
+	/**
+	 * Database host
+	 * @var string
+	 */
+	const DB_HOST = 'localhost';
+	
+	/**
+	 * Database name
+	 * @var string
+	 */
+	const DB_NAME = 'emsi';
+	
+	/**
+	 * Database user
+	 * @var string
+	 */
+	const DB_USER = 'root';
+	
+	/**
+	 * Database password
+	 * @var string
+	 */
+	const DB_PASSWORD = '';
+	
+	/**
+	 * Show or hide error messages on screen
+	 * @var boolean
+	 */
+	const SHOW_ERRORS = true;
+	
+	/**
+	 * Secret key for hashing
+	 * @var string
+	 */
+	const SECRET_KEY = '';
+	
+	/**
+	 * the SMTP host server to send emails
+	 * @var string
+	 */
+	const SMTP_HOST = '';
+	
+	/**
+	 * SMTP username
+	 * @var string
+	 */
+	const SMTP_USER = '';
+	
+	/**
+	 * SMTP password
+	 * @var string
+	 */
+	const SMTP_PASSWORD = '';
+	
+	/**
+	 * secret recaptcha key
+	 * @var string
+	 */
+	const RECAPTCHA_KEY = '';
 }
