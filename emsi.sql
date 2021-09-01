@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 30 Sie 2021, 13:41
+-- Czas generowania: 01 Wrz 2021, 10:59
 -- Wersja serwera: 10.4.20-MariaDB
 -- Wersja PHP: 8.0.9
 
@@ -20,6 +20,34 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `emsi`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `contractors`
+--
+
+CREATE TABLE `contractors` (
+  `id` int(11) NOT NULL,
+  `nip` varchar(15) NOT NULL,
+  `regon` varchar(15) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `is_vat` varchar(15) NOT NULL,
+  `street` varchar(50) NOT NULL,
+  `home_nr` varchar(15) NOT NULL,
+  `apartment_nr` varchar(15) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `contractors`
+--
+
+INSERT INTO `contractors` (`id`, `nip`, `regon`, `name`, `is_vat`, `street`, `home_nr`, `apartment_nr`, `is_active`) VALUES
+(1, '5842383932', '190560361', 'Gdański Ogród Zoologiczny', 'tak', 'Karwieńska', '3', '5', 1),
+(2, '6431728198', '240957723', 'EMSI SP Z O O', 'tak', 'Michałkowicka', '77', '', 1),
+(3, '8982167437', '021125219', 'ZOO WROCŁAW SP Z O O', 'tak', 'Wróblewskiego', '1-5', '', 1),
+(4, '5252344078', '140182840', 'GOOGLE POLAND SP Z O O', 'tak', 'Emilii Plater', '53', '', 1);
 
 -- --------------------------------------------------------
 
@@ -76,6 +104,12 @@ INSERT INTO `employees` (`id`, `first_name`, `last_name`) VALUES
 --
 
 --
+-- Indeksy dla tabeli `contractors`
+--
+ALTER TABLE `contractors`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `delegations`
 --
 ALTER TABLE `delegations`
@@ -90,6 +124,12 @@ ALTER TABLE `employees`
 --
 -- AUTO_INCREMENT dla zrzuconych tabel
 --
+
+--
+-- AUTO_INCREMENT dla tabeli `contractors`
+--
+ALTER TABLE `contractors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `delegations`

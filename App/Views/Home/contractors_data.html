@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    <h1 class="mb-4">Dane kontrahentów</h1>
+	
+	<table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">NIP</th>
+                <th scope="col">REGON</th>
+                <th scope="col">NAZWA</th>
+                <th scope="col">CZY PŁATNIK VAT?</th>
+                <th scope="col">ULICA</th>
+                <th scope="col">NUMER DOMU</th>
+                <th scope="col">NUMER MIESZKANIA</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contractor in contractors %}
+			<tr>
+				<td>{{ contractor.nip }}</td>
+				<td>{{ contractor.regon }}</td>
+				<td>{{ contractor.name }}</td>
+				<td>{{ contractor.is_vat }}</td>
+				<td>{{ contractor.street }}</td>
+				<td>{{ contractor.home_nr }}</td>
+				<td>{{ contractor.apartment_nr }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+	
+	<h1 class="mb-4">Panel do zarządzania danymi</h1>
+	<div class="d-grid gap-2 col-3">
+		<button class="btn btn-primary" type="button" id="add-contractor">Dodawanie kontrahenta</button>
+		<button class="btn btn-warning" type="button" id="edit-contractor">Edycja kontrahenta</button>
+		<button class="btn btn-danger" type="button" id="delete-contractor">Usuwanie kontrahenta</button>
+	</div>
+	
+	<div id="admin">
+	</div>
+	
+	<script>
+		window.onload=function()
+		{	
+			var add_contractor = document.querySelector('#add-contractor');
+			var edit_contractor = document.querySelector('#edit-contractor');
+			var delete_contractor = document.querySelector('#delete-contractor');
+	
+			add_contractor.addEventListener("click", addForm, false);
+			edit_contractor.addEventListener("click", initialEditForm, false);
+			delete_contractor.addEventListener("click", deleteForm, false);
+		}
+		
+		function addForm()
+		{
+			var add_form = '<h3 class="mt-4">Dodaj kontrahenta</h3>';
+			add_form += '<form method="post" action="/home/add-contractor">';
+			add_form += '<div><label class="form-label">NIP<input type="text" name="nip" class="form-control"/></label></div>';
+			add_form += '<div><label class="form-label">REGON<input type="text" name="regon" class="form-control"/></label></div>';
+			add_form += '<div class="mb-2"><label class="form-label" for="name">NAZWA</label><input type="text" id="name" name="name" class="form-control"/></div>';
+			add_form += '<div class="mb-2"><label class="form-label" for="vat">CZY PŁATNIK VAT?</label><select class="form-select" id="vat" name="vat"><option value="tak">tak</option><option value="nie">nie</option></select></div>';
+			add_form += '<div class="mb-2"><label class="form-label" for="street">ULICA</label><input type="text" id="street" name="street" class="form-control"/></div>';
+			add_form += '<div><label class="form-label">NUMER DOMU<input type="text" name="home_nr" class="form-control"/></label></div>';
+			add_form += '<div><label class="form-label">NUMER MIESZKANIA<input type="text" name="apartment_nr" class="form-control"/></label></div>';
+			add_form += '<div class="my-3"><input type="submit" class="btn btn-success mx-2" value="Dodaj"><input type="reset" value="Anuluj" class="btn btn-danger"></div></form>';		
+			document.querySelector("#admin").innerHTML = add_form;
+		}
+		
+		function initialEditForm()
+		{
+			var edit_form = '<h3 class="mt-4">Edytuj kontrahenta</h3>';
+			edit_form += '<form method="post" action="">';
+			edit_form += '<div class="row g-3 align-items-center">';
+			edit_form += '<div class="col-auto"><label for="nip" class="col-form-label">NIP</label></div>';
+			edit_form += '<div class="col-auto"><input type="text" id="nip" name="nip" class="form-control"></div>';	
+			edit_form += '<div class="col-auto"><button type="button" class="btn btn-secondary" id="find-nip" onclick="findNip()">Wyszukaj</button></div>';		
+			edit_form += '<div class="col-auto"><span class="form-text">Wpisz nip firmy, którą chcesz edytować</span></div></div></form>';		
+			document.querySelector("#admin").innerHTML = edit_form;
+		}
+		
+		function deleteForm()
+		{
+			var delete_form = '<h3 class="mt-4">Usuwanie kontrahenta</h3>';
+			delete_form += '<form method="post" action="/home/delete-contractor">';
+			delete_form += '<div class="row g-3 align-items-center">';
+			delete_form += '<div class="col-auto"><label for="nip" class="col-form-label">NIP</label></div>';
+			delete_form += '<div class="col-auto"><input type="text" id="nip" name="nip" class="form-control"></div>';	
+			delete_form += '<div class="col-auto"><input type="submit" class="btn btn-danger" value="Usuń"></div>';		
+			delete_form += '<div class="col-auto"><span class="form-text">Wpisz nip firmy, którą chcesz usunąć</span></div></div></form>';		
+			document.querySelector("#admin").innerHTML = delete_form;
+		}
+		
+		function findNip()
+		{
+			var nip = document.getElementById("nip").value;
+			
+			$.post("/home/get-contractor", {nip: nip})
+			.done(function(data) {
+				var jsonData = JSON.parse(data);
+				
+				if (jsonData.nip) {
+					var edit_form = '<h3 class="mt-4">Edytuj kontrahenta</h3>';
+					edit_form += '<form method="post" action="/home/edit-contractor">';
+					edit_form += '<input type="hidden" name="old-nip" value="' + jsonData.nip + '">';
+					edit_form += '<div><label class="form-label">NIP<input type="text" name="new-nip" class="form-control" value="' + jsonData.nip + '" placeholder="' + jsonData.nip + '"/></label></div>';
+					edit_form += '<div><label class="form-label">REGON<input type="text" name="regon" class="form-control" value="' + jsonData.regon + '" placeholder="' + jsonData.regon + '"/></label></div>';
+					edit_form += '<div class="mb-2"><label class="form-label" for="name">NAZWA</label><input type="text" id="name" name="name" class="form-control" value="' + jsonData.name + '" placeholder="' + jsonData.name + '"/></div>';
+					if (jsonData.is_vat == "tak") {
+						edit_form += '<div class="mb-2"><label class="form-label" for="vat">CZY PŁATNIK VAT?</label><select class="form-select" id="vat" name="vat"><option value="tak" selected>tak</option><option value="nie">nie</option></select></div>';
+					} else {
+						edit_form += '<div class="mb-2"><label class="form-label" for="vat">CZY PŁATNIK VAT?</label><select class="form-select" id="vat" name="vat"><option value="tak" >tak</option><option value="nie" selected>nie</option></select></div>';
+					}
+					edit_form += '<div class="mb-2"><label class="form-label" for="street">ULICA</label><input type="text" id="street" name="street" class="form-control" value="' + jsonData.street + '" placeholder="' + jsonData.street + '"/></div>';
+					edit_form += '<div><label class="form-label">NUMER DOMU<input type="text" name="home_nr" class="form-control" value="' + jsonData.home_nr + '" placeholder="' + jsonData.home_nr + '"/></label></div>';
+					edit_form += '<div><label class="form-label">NUMER MIESZKANIA<input type="text" name="apartment_nr" class="form-control" value="' + jsonData.apartment_nr + '" placeholder="' + jsonData.apartment_nr + '"/></label></div>';
+					edit_form += '<div class="my-2"><input type="submit" class="btn btn-success mx-2" value="Zmień dane"><input type="reset" value="Anuluj" class="btn btn-danger"></div></form>';
+					document.querySelector("#admin").innerHTML = edit_form;
+				}
+			});
+		}
+	</script>
+		
+  
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use \App\Models\Contractor;
 use \App\Models\Delegation;
 use \Core\View;
 
@@ -64,5 +65,66 @@ class Home extends \Core\Controller
         View::renderTemplate('Home/delegation_table.html', [
             'delegations' => $data
         ]);
+    }
+	
+	/**
+     * Show the contractors data page
+     *
+     * @return void
+     */
+    public function contractorsDataAction()
+    {
+		$contractor = new Contractor();
+		$data = $contractor->getContractors();
+        View::renderTemplate('Home/contractors_data.html', [
+			'contractors' => $data
+		]);
+    }
+	
+	/**
+     * Get the constractor by its nip
+     *
+     * @return void
+     */
+    public function getContractorAction()
+    {
+		$contractor = new Contractor();
+		$contractor->getContractor();
+    }
+	
+	/**
+     * Add contractor
+     *
+     * @return void
+     */
+    public function addContractorAction()
+    {
+		$contractor = new Contractor();
+		$contractor->addContractor($_POST);
+		$this->contractorsDataAction();
+    }
+	
+	/**
+     * Edit contractor
+     *
+     * @return void
+     */
+    public function editContractorAction()
+    {
+		$contractor = new Contractor();
+		$contractor->editContractor($_POST);
+		$this->contractorsDataAction();
+    }
+	
+	/**
+     * Delete contractor
+     *
+     * @return void
+     */
+    public function deleteContractorAction()
+    {
+		$contractor = new Contractor();
+		$contractor->deleteContractor($_POST);
+		$this->contractorsDataAction();
     }
 }
